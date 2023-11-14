@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:cet_eventzone/dbconnect.dart';
+import 'package:cet_eventzone/main.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:cet_eventzone/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final _emailController = TextEditingController();
   final passwordcontroller = TextEditingController();
-  Session? session = null;
+  late Session? session;
   late final User? user;
   var showpassword = true;
 
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       session = res.session;
       user = res.user;
-      print("user:$user");
+      // print("user:$user");
     } on AuthException catch (error) {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -108,7 +109,9 @@ class _LoginPageState extends State<LoginPage> {
                           showpassword = !showpassword;
                         });
                       },
-                      icon: const Icon(Icons.remove_red_eye)),
+                      icon: showpassword
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.visibility_off)),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)))),
               controller: passwordcontroller,
@@ -116,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           ElevatedButton(
               onPressed: () {
-                print("user" + _emailController.text);
+                // print("user" + _emailController.text);
                 if (!_isLoading) {
                   _signIn();
                 }

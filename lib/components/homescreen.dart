@@ -1,5 +1,6 @@
+import 'package:cet_eventzone/components/adddepartment.dart';
 import 'package:flutter/material.dart';
-import 'package:cet_eventzone/main.dart';
+// import 'package:cet_eventzone/main.dart';
 // import 'login.dart';
 import 'eventpage.dart';
 
@@ -16,10 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     EventWidget(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    AddDepartment(),
+    // Text("Testing"),
     Text(
       'Index 2: School',
       style: optionStyle,
@@ -35,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('EventZone'),
       ),
@@ -45,15 +45,15 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Events',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.person_add_alt_1_sharp),
+            label: 'Super Users',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.portrait_rounded),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
