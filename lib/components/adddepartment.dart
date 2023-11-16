@@ -58,8 +58,8 @@ class _AddDepartmentState extends State<AddDepartment> {
                       });
                     },
                     icon: showpassword
-                        ? Icon(Icons.visibility)
-                        : Icon(Icons.visibility_off)),
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off)),
                 border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)))),
             controller: passwordcontroller,
@@ -110,7 +110,7 @@ class _AddDepartmentState extends State<AddDepartment> {
         ),
         ElevatedButton(
             onPressed: () async {
-              final isusercreated = await createuser(
+              final isusercreated = await createuser(context,
                   emailcontroller.text, passwordcontroller.text);
               if (isusercreated) {
                 final lid =
@@ -122,6 +122,7 @@ class _AddDepartmentState extends State<AddDepartment> {
                   emailcontroller.text = "";
                   passwordcontroller.text = "";
                   departmentcontroller.text = "";
+                  namecontroller.text = "";
                   yearcontroller.text = "1";
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.green[200],
@@ -133,7 +134,7 @@ class _AddDepartmentState extends State<AddDepartment> {
                           "User registered ,But there is something issue occured")));
                 }
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     backgroundColor: Colors.red,
                     content: Text("Error occured")));
                 //

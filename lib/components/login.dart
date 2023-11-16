@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cet_eventzone/dbconnect.dart';
 import 'package:cet_eventzone/main.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
@@ -21,7 +20,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final _emailController = TextEditingController();
   final passwordcontroller = TextEditingController();
-  late Session? session;
+  // ignore: prefer_typing_uninitialized_variables
+  var session;
   late final User? user;
   var showpassword = true;
 

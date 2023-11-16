@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cet_eventzone/main.dart';
 
-class EventWidget extends StatefulWidget {
-  const EventWidget({super.key});
+class SuperuserView extends StatefulWidget {
+  const SuperuserView({super.key});
 
   @override
-  State<EventWidget> createState() => _EventWidgetState();
+  State<SuperuserView> createState() => _SuperuserViewState();
 }
 
-class _EventWidgetState extends State<EventWidget> {
-  final _stream = supabase.from('events').stream(primaryKey: ['id']);
-
+class _SuperuserViewState extends State<SuperuserView> {
+  final _stream = supabase.from('login').stream(primaryKey: ['id']);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,11 @@ class _EventWidgetState extends State<EventWidget> {
                   },
                 );
               } else {
-                return Container(padding: const EdgeInsets.all(50),child:  Text("loading",style: TextStyle(color: Colors.blue[100])),);
+                return Container(
+                  padding: const EdgeInsets.all(50),
+                  child: Text("loading",
+                      style: TextStyle(color: Colors.blue[100])),
+                );
               }
             },
           ),
