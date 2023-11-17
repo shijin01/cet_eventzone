@@ -1,4 +1,5 @@
 import 'package:cet_eventzone/components/adddepartment.dart';
+import 'package:cet_eventzone/components/superuserview.dart';
 import 'package:flutter/material.dart';
 // import 'package:cet_eventzone/main.dart';
 // import 'login.dart';
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     EventWidget(),
-    AddDepartment(),
+    SuperuserView(),
     // Text("Testing"),
     Text(
       'Index 2: School',
@@ -35,6 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      // floatingActionButton:
+      //     _selectedIndex == 1 ? FloatingActionButton(onPressed: () {}) : null,
       appBar: AppBar(
         title: const Text('EventZone'),
       ),

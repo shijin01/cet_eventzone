@@ -50,3 +50,11 @@ Future<bool> insertintouserdetails(
     return success;
   }
 }
+
+Future<List<Map<String, dynamic>>> selectdepartmentusers() async {
+  print("inside fun");
+  final List<Map<String, dynamic>> data = await supabase
+      .from('login')
+      .select('id,username,typeofuser,userdetails(name,department,year)');
+  return data;
+}

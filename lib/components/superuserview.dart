@@ -9,50 +9,51 @@ class SuperuserView extends StatefulWidget {
 }
 
 class _SuperuserViewState extends State<SuperuserView> {
-  final _stream = supabase.from('login').stream(primaryKey: ['id']);
+  Future<List<Map<String, dynamic>>> getdata() async {
+    final List<Map<String, dynamic>> data = await supabase.from('login').select('');
+    return data;
+    // await Future.delayed(Duration.zero);
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
+    // final data = getdata();
+    final data=getdata();
+    print("\n------\nAfter datacall\------n");
+    print(data);
+    // getdata();
     return Column(
-      children: <Widget>[
+      children: [
         const Text("Helo"),
-        Expanded(
-          child: StreamBuilder<List<Map<String, dynamic>>>(
-            stream: _stream,
-            builder: (context, snapshot) {
-              // print(snapshot.data);
-              if (snapshot.hasError) {
-                return const Text("Something went wrong");
-              }
-              if (snapshot.hasData) {
-                List<Map<String, dynamic>> data =
+        SizedBox(
+            height: 10,),
+        Expanded(child:  FutureBuilder<List<Map<String, dynamic>>>(
+  future: data,
+  builder: (context, snapshot) {
+    if (snapshot.hasData &&
+        snapshot.connectionState == ConnectionState.done) {
+          List<Map<String, dynamic>> data1 =
                     snapshot.data as List<Map<String, dynamic>>;
-                return ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(data[index]['event_name'] +
-                                " " +
-                                data[index]['event_date'] ??
-                            " "),
-                        subtitle: Text(data[index]['department']),
-                        // trailing: Icon(Icons.more_vert),
-                        isThreeLine: true,
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return Container(
-                  padding: const EdgeInsets.all(50),
-                  child: Text("loading",
-                      style: TextStyle(color: Colors.blue[100])),
-                );
-              }
-            },
-          ),
-        ),
+      return ListView.builder(
+        itemCount: snapshot.data!.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              title: Text(data1[index]['username']),
+              subtitle: Text(data1[index]['typeofuser']),
+            ),
+          );
+        },
+      );
+    }
+
+    /// handles others as you did on question
+    else {
+      return const CircularProgressIndicator();
+    }
+  }))
       ],
     );
   }
