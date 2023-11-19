@@ -31,119 +31,125 @@ class _AddDepartmentState extends State<AddDepartment> {
           .add(DropdownMenuEntry<int>(value: i, label: i.toString()));
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: TextField(
-            controller: emailcontroller,
-            decoration: const InputDecoration(
-                hintText: "Email",
-                prefixIcon: Icon(Icons.email),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: TextField(
-            obscureText: showpassword,
-            decoration: InputDecoration(
-                hintText: "Password",
-                suffixIcon: IconButton(
-                    onPressed: () {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Add User"),),
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: emailcontroller,
+                decoration: const InputDecoration(
+                    hintText: "Email",
+                    prefixIcon: Icon(Icons.email),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                obscureText: showpassword,
+                decoration: InputDecoration(
+                    hintText: "Password",
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            showpassword = !showpassword;
+                          });
+                        },
+                        icon: showpassword
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off)),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+                controller: passwordcontroller,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: namecontroller,
+                decoration: const InputDecoration(
+                    hintText: "Name",
+                    prefixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: departmentcontroller,
+                decoration: const InputDecoration(
+                    hintText: "Department",
+                    prefixIcon: Icon(Icons.home_work_rounded),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Text("Year:"),
+                  ),
+                  DropdownMenu<int>(
+                    initialSelection: selectedyear,
+                    dropdownMenuEntries: dropdownmenuentries,
+                    controller: yearcontroller,
+                    onSelected: (i) {
                       setState(() {
-                        showpassword = !showpassword;
+                        year = i;
                       });
                     },
-                    icon: showpassword
-                        ? const Icon(Icons.visibility)
-                        : const Icon(Icons.visibility_off)),
-                border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-            controller: passwordcontroller,
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: TextField(
-            controller: namecontroller,
-            decoration: const InputDecoration(
-                hintText: "Name",
-                prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: TextField(
-            controller: departmentcontroller,
-            decoration: const InputDecoration(
-                hintText: "Department",
-                prefixIcon: Icon(Icons.home_work_rounded),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(5),
-                child: const Text("Year:"),
+                  )
+                ],
               ),
-              DropdownMenu<int>(
-                initialSelection: selectedyear,
-                dropdownMenuEntries: dropdownmenuentries,
-                controller: yearcontroller,
-                onSelected: (i) {
-                  setState(() {
-                    year = i;
-                  });
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  final isusercreated = await createuser(context,
+                      emailcontroller.text, passwordcontroller.text);
+                  if (isusercreated) {
+                    final lid =
+                        await insertintologin(emailcontroller.text, "department");
+                    final success = await insertintouserdetails(lid,
+                        namecontroller.text, departmentcontroller.text, year ?? 0);
+                    if (success) {
+                      // ignore: use_build_context_synchronously
+                      emailcontroller.text = "";
+                      passwordcontroller.text = "";
+                      departmentcontroller.text = "";
+                      namecontroller.text = "";
+                      yearcontroller.text = "1";
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.green[200],
+                          content: const Text("Successfully added")));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.red[300],
+                          content: const Text(
+                              "User registered ,But there is something issue occured")));
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text("Error occured")));
+                    //
+                  }
+        
+                  //
                 },
-              )
-            ],
-          ),
+                child: const Text("REGISTER"))
+          ],
         ),
-        ElevatedButton(
-            onPressed: () async {
-              final isusercreated = await createuser(context,
-                  emailcontroller.text, passwordcontroller.text);
-              if (isusercreated) {
-                final lid =
-                    await insertintologin(emailcontroller.text, "department");
-                final success = await insertintouserdetails(lid,
-                    namecontroller.text, departmentcontroller.text, year ?? 0);
-                if (success) {
-                  // ignore: use_build_context_synchronously
-                  emailcontroller.text = "";
-                  passwordcontroller.text = "";
-                  departmentcontroller.text = "";
-                  namecontroller.text = "";
-                  yearcontroller.text = "1";
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.green[200],
-                      content: const Text("Successfully added")));
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.red[300],
-                      content: const Text(
-                          "User registered ,But there is something issue occured")));
-                }
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("Error occured")));
-                //
-              }
-
-              //
-            },
-            child: const Text("REGISTER"))
-      ],
+      ),
     );
   }
 }

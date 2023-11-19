@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cet_eventzone/main.dart';
+import 'package:cet_eventzone/clientsupa.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -20,6 +20,7 @@ class _SplashPageState extends State<SplashPage> {
     if (!mounted) {
       return;
     }
+    final supabase = getclient();
 
     final session = supabase.auth.currentSession;
     if (session != null) {

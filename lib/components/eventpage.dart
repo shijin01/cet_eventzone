@@ -1,3 +1,4 @@
+import 'package:cet_eventzone/pages/eventdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:cet_eventzone/main.dart';
 
@@ -9,6 +10,7 @@ class EventWidget extends StatefulWidget {
 }
 
 class _EventWidgetState extends State<EventWidget> {
+  
   final _stream = supabase.from('events').stream(primaryKey: ['id']);
 
 
@@ -33,6 +35,7 @@ class _EventWidgetState extends State<EventWidget> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
+
                         title: Text(data[index]['event_name'] +
                                 " " +
                                 data[index]['event_date'] ??
@@ -40,6 +43,22 @@ class _EventWidgetState extends State<EventWidget> {
                         subtitle: Text(data[index]['department']),
                         // trailing: Icon(Icons.more_vert),
                         isThreeLine: true,
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>  EventDetails(id: data[index]['id'],
+                                 eventname: data[index]['event_name'] , 
+                                eventdescription: data[index]['event_description'],
+                                eventdate:data[index]['event_date'] ,department: data[index]['department'],
+                                ticket:  data[index]['ticket'],image:data[index]['image'],
+                                maxticket:  data[index]['max_no_of_tickets'],
+                                remticket:  data[index]['remaining_ticket'],
+                                price:  data[index]['price'],
+                                ticketbookdate:  data[index]['ticket_book_date'],
+                                upi: data[index]['upi'] ,)),
+                          );
+                        },
                       ),
                     );
                   },

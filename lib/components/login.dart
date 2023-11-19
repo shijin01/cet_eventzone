@@ -1,7 +1,6 @@
-import 'dart:async';
-
-import 'package:cet_eventzone/main.dart';
+import 'package:cet_eventzone/clientsupa.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -24,19 +23,24 @@ class _LoginPageState extends State<LoginPage> {
   var session;
   late final User? user;
   var showpassword = true;
-
+  // final pref =await SharedPreferences.getInstance();
   // late final Session? session;
   // late final User? user;
+  String? ses="";
   Future<void> _signIn() async {
     try {
       setState(() {
         _isLoading = true;
       });
+      final supabase = getclient();
       final AuthResponse res = await supabase.auth.signInWithPassword(
         email: _emailController.text,
         password: passwordcontroller.text,
       );
-      session = res.session;
+      final pref = await SharedPreferences.getInstance();
+      final session = res.session;
+      await pref.setString("SESSION", session!.persistSessionString ?? "");
+      ses = pref.getString("SESSION");
       user = res.user;
       // print("user:$user");
     } on AuthException catch (error) {
@@ -56,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _isLoading = false;
         });
-        if (session != null) {
+        if (ses != "") {
           Navigator.of(context).pushReplacementNamed('/homepage');
         }
       }
@@ -68,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
     // _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
     if (_redirecting) return;
     // final session = data.session;
-    if (session != null) {
+    if (ses != "") {
       _redirecting = true;
       Navigator.of(context).pushReplacementNamed('/homepage');
     }

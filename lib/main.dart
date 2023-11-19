@@ -1,4 +1,4 @@
-
+import 'package:cet_eventzone/clientsupa.dart';
 import 'package:cet_eventzone/components/homescreen.dart';
 import 'package:cet_eventzone/pages/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-final supabase = Supabase.instance.client;
+final supabase = getclient();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -39,5 +39,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
