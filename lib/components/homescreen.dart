@@ -1,5 +1,4 @@
-// import 'package:cet_eventzone/components/adddepartment.dart';
-import 'package:cet_eventzone/components/adddepartment.dart';
+
 import 'package:cet_eventzone/components/adminprofile.dart';
 import 'package:cet_eventzone/components/superuserview.dart';
 import 'package:flutter/material.dart';
@@ -33,14 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      floatingActionButton: _selectedIndex == 1
-          ? FloatingActionButton(
-              child: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context)=>const AddDepartment()));
-              })
-          : null,
+      
       appBar: AppBar(
         title: const Text('EventZone'),
       ),
@@ -58,8 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Super Users',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.portrait_rounded),
-            label: 'Profile',
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
         currentIndex: _selectedIndex,

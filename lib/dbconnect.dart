@@ -1,30 +1,31 @@
 // ignore_for_file: control_flow_in_finally
-
+import 'package:cet_eventzone/clientsupa.dart';
 import 'package:cet_eventzone/main.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<bool> createuser(BuildContext context, email, String password) async {
+Future<User?> createuser(BuildContext context, email, String password) async {
   try {
     final AuthResponse res = await supabase.auth.signUp(
       email: email,
       password: password,
     );
-    return res.user!.email == email;
+    return res.user;
   } catch (err) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Error:$err"),
       backgroundColor: Colors.red,
     ));
-    return false;
+    return null;
   }
   // print("result after singup:" + res.user.toString());
 }
 
-Future<int> insertintologin(String username, String typeofuser) async {
+Future<int> insertintologin(
+    String username, String typeofuser, String uid) async {
   final List<Map<String, dynamic>> data = await supabase.from('login').insert([
-    {'username': username, 'typeofuser': typeofuser},
+    {'username': username, 'typeofuser': typeofuser, 'uid': uid},
   ]).select();
   // print("-----\n\nREturn at insertinto login:${data[0]['id']}");
   return data[0]['id'];
@@ -53,11 +54,46 @@ Future<bool> insertintouserdetails(
 
 Future<List<Map<String, dynamic>>> selectdepartmentusers() async {
   // print("inside fun");
-  final List<Map<String, dynamic>> data = await supabase
-      .from('login')
-      .select('id,username,typeofuser');
+  // const typeofuser = "department";
+  final List<Map<String, dynamic>> data =
+      await supabase.from('login').select('id,username,typeofuser');
+  List<Map<String, dynamic>> d = [];
   for (var i in data) {
     print(i);
+    if (i['typeofuser'] != 'admin') {
+      d.add(i);
+    }
   }
-  return data;
+  return d;
+}
+
+void deletedepartmentusers(BuildContext context, int id) async {
+  // print("inside fun");
+  final List<Map<String, dynamic>> data =
+      await supabase.from('userdetails').delete().match({'lid': id}).select();
+  if (data.isNotEmpty) {
+    List<Map<String, dynamic>> data1 =
+        await supabase.from('login').delete().match({'id': id}).select();
+    if (data1.isNotEmpty) {
+      final supaAuth = getAuth();
+      try {
+        await supaAuth.auth.admin.deleteUser(data1[0]['uid']);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.green[200],
+            content: const Text("Successfully deleted")));
+      } catch (err) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Error")));
+      }
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Error in login")));
+    }
+  } else {
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("Error in userdetails")));
+  }
 }

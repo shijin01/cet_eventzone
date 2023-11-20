@@ -114,11 +114,11 @@ class _AddDepartmentState extends State<AddDepartment> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  final isusercreated = await createuser(context,
+                  final usercreated = await createuser(context,
                       emailcontroller.text, passwordcontroller.text);
-                  if (isusercreated) {
+                  if (usercreated!.email==emailcontroller.text) {
                     final lid =
-                        await insertintologin(emailcontroller.text, "department");
+                        await insertintologin(emailcontroller.text, "department", usercreated!.id);
                     final success = await insertintouserdetails(lid,
                         namecontroller.text, departmentcontroller.text, year ?? 0);
                     if (success) {
