@@ -1,4 +1,6 @@
 import 'package:cet_eventzone/clientsupa.dart';
+import 'package:cet_eventzone/components/changepassword.dart';
+import 'package:cet_eventzone/dbconnect.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +36,7 @@ class AdminProfile extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(25),
             // margin: const EdgeInsets.symmetric(horizontal: 25),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 219, 145, 145),
               // borderRadius: BorderRadius.circular(8),
             ),
@@ -49,21 +51,15 @@ class AdminProfile extends StatelessWidget {
               ),
             ),
           ),
-          onTap: () async {
-            try {
-              await supabase.auth.reauthenticate();
-            } catch (err) {
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text("Erroe:$err")));
-            }
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChangePassword()));
           },
         ),
         GestureDetector(
           child: Container(
             padding: const EdgeInsets.all(25),
             // margin: const EdgeInsets.symmetric(horizontal: 25),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 229, 159, 159),
               // borderRadius: BorderRadius.circular(8),
             ),
@@ -78,16 +74,35 @@ class AdminProfile extends StatelessWidget {
               ),
             ),
           ),
-          onTap: () async {
-            try {
-              await supabase.auth.signOut();
-              final pref = await SharedPreferences.getInstance();
-              await pref.setString("SESSION", "");
-              // ignore: use_build_context_synchronously
-              Navigator.of(context).pushReplacementNamed('/login');
-            } catch (err) {
-              SnackBar(content: Text("Error occured:$err"));
-            }
+          onTap: () {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context1) => AlertDialog(
+                title: const Text('Alert'),
+                content: const Text('Logout?'),
+                actions: <Widget>[
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[400]),
+                    autofocus: true,
+                    onPressed: () => Navigator.pop(context1, 'Cancel'),
+                    child: const Text(
+                      'Cancel',
+                    ),
+                  ),
+                  ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    onPressed: () {
+                      logout(context);
+                      Navigator.pop(context1, 'OK');
+                    },
+                    child:
+                        const Text('OK', style: TextStyle(color: Colors.white)),
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ],

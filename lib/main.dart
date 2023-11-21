@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (_) => const SplashPage(),
         '/login': (_) => const LoginPage(),
-        '/homepage': (_) => const HomeScreen(),
+        '/homepage': (_) => const HomeScreen(selectedIndex: 0,),
       },
       // home: const MyHomePage(title: 'Campus EventZone'),
     );

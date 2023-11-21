@@ -1,4 +1,3 @@
-
 import 'package:cet_eventzone/components/adminprofile.dart';
 import 'package:cet_eventzone/components/superuserview.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +6,22 @@ import 'package:flutter/material.dart';
 import 'eventpage.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int selectedIndex;
+  const HomeScreen({super.key, required this.selectedIndex});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _selectedIndex = widget.selectedIndex;
+    super.initState();
+  }
+
   static const List<Widget> _widgetOptions = <Widget>[
     EventWidget(),
     SuperuserView(),
@@ -32,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      
       appBar: AppBar(
         title: const Text('EventZone'),
       ),

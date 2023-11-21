@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       final pref = await SharedPreferences.getInstance();
       final session = res.session;
-      await pref.setString("SESSION", session!.persistSessionString ?? "");
+      await pref.setString("SESSION", session!.persistSessionString??"");
       ses = pref.getString("SESSION");
       user = res.user;
       // print("user:$user");
@@ -51,8 +51,10 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Theme.of(context).colorScheme.error,
       ));
     } catch (error) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Unexpected error occurred'),
+        // ignore: use_build_context_synchronously
         backgroundColor: Theme.of(context).colorScheme.error,
       ));
     } finally {

@@ -2,6 +2,7 @@
 import 'package:cet_eventzone/clientsupa.dart';
 import 'package:cet_eventzone/main.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -96,4 +97,34 @@ void deletedepartmentusers(BuildContext context, int id) async {
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text("Error in userdetails")));
   }
+}
+
+void logout(BuildContext context)async{
+   try {
+              await supabase.auth.signOut();
+              final pref = await SharedPreferences.getInstance();
+              await pref.setString("SESSION", "");
+              // ignore: use_build_context_synchronously
+              Navigator.of(context).pushReplacementNamed('/login');
+            } catch (err) {
+               ScaffoldMessenger.of(context)
+        .showSnackBar(
+              SnackBar(content: Text("Error occured:$err")));
+            }
+}
+
+void changeuserpassword(BuildContext context,String pwd) async{
+  try {
+    final UserResponse res = await supabase.auth.updateUser(
+      UserAttributes(
+        password: pwd,
+      ),
+    );
+    final User? updatedUser = res.user;
+  } catch (err) {
+     ScaffoldMessenger.of(context)
+        .showSnackBar(
+    SnackBar(content: Text("Error occured:$err")));
+  }
+
 }

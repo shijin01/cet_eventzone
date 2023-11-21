@@ -32,7 +32,9 @@ class _AddDepartmentState extends State<AddDepartment> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Add User"),),
+      appBar: AppBar(
+        title: const Text("Add User"),
+      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
@@ -114,13 +116,16 @@ class _AddDepartmentState extends State<AddDepartment> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  final usercreated = await createuser(context,
-                      emailcontroller.text, passwordcontroller.text);
-                  if (usercreated!.email==emailcontroller.text) {
-                    final lid =
-                        await insertintologin(emailcontroller.text, "department", usercreated!.id);
-                    final success = await insertintouserdetails(lid,
-                        namecontroller.text, departmentcontroller.text, year ?? 0);
+                  final usercreated = await createuser(
+                      context, emailcontroller.text, passwordcontroller.text);
+                  if (usercreated!.email == emailcontroller.text) {
+                    final lid = await insertintologin(
+                        emailcontroller.text, "department", usercreated.id);
+                    final success = await insertintouserdetails(
+                        lid,
+                        namecontroller.text,
+                        departmentcontroller.text,
+                        year ?? 0);
                     if (success) {
                       // ignore: use_build_context_synchronously
                       emailcontroller.text = "";
@@ -132,18 +137,20 @@ class _AddDepartmentState extends State<AddDepartment> {
                           backgroundColor: Colors.green[200],
                           content: const Text("Successfully added")));
                     } else {
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           backgroundColor: Colors.red[300],
                           content: const Text(
                               "User registered ,But there is something issue occured")));
                     }
                   } else {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         backgroundColor: Colors.red,
                         content: Text("Error occured")));
                     //
                   }
-        
+
                   //
                 },
                 child: const Text("REGISTER"))
