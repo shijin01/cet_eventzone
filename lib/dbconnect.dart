@@ -99,21 +99,20 @@ void deletedepartmentusers(BuildContext context, int id) async {
   }
 }
 
-void logout(BuildContext context)async{
-   try {
-              await supabase.auth.signOut();
-              final pref = await SharedPreferences.getInstance();
-              await pref.setString("SESSION", "");
-              // ignore: use_build_context_synchronously
-              Navigator.of(context).pushReplacementNamed('/login');
-            } catch (err) {
-               ScaffoldMessenger.of(context)
-        .showSnackBar(
-              SnackBar(content: Text("Error occured:$err")));
-            }
+void logout(BuildContext context) async {
+  try {
+    await supabase.auth.signOut();
+    final pref = await SharedPreferences.getInstance();
+    await pref.setString("SESSION", "");
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pushReplacementNamed('/login');
+  } catch (err) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Error occured:$err")));
+  }
 }
 
-void changeuserpassword(BuildContext context,String pwd) async{
+Future<bool> changeuserpassword(BuildContext context, String pwd) async {
   try {
     final UserResponse res = await supabase.auth.updateUser(
       UserAttributes(
@@ -121,10 +120,20 @@ void changeuserpassword(BuildContext context,String pwd) async{
       ),
     );
     final User? updatedUser = res.user;
+    return true;
+  } on AuthException catch (err) {
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(err.message),
+      backgroundColor: Colors.red[300],
+    ));
+    return false;
   } catch (err) {
-     ScaffoldMessenger.of(context)
-        .showSnackBar(
-    SnackBar(content: Text("Error occured:$err")));
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Something went Wrong"),
+      backgroundColor: Colors.red[300],
+    ));
+    return false;
   }
-
 }

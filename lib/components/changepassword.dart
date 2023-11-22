@@ -85,17 +85,20 @@ class _ChangePasswordState extends State<ChangePassword> {
                 ),
               ),
               ElevatedButton(
-                  onPressed: () {
-                    changeuserpassword(context, conpasswordcontroller.text);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Successfull"),
-                      backgroundColor: Colors.green[200],
-                    ));
-                    Navigator.pushReplacement(
+                  onPressed: () async {
+                    final ischanged =
+                        changeuserpassword(context, conpasswordcontroller.text);
+                    if (await ischanged) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Successfull"),
+                        backgroundColor: Colors.green[200],
+                      ));
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => HomeScreen(selectedIndex: 2)),
-                        );
+                      );
+                    }
                   },
                   child: const Text("CHANGE"))
             ],

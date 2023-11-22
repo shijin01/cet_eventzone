@@ -9,42 +9,30 @@ class AdminProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final supabase = getclient();
+    // final supabase = getclient();
     return Scaffold(
         body: SafeArea(
-            child: Center(
-                child: Column(
+            child: Column(
       children: [
-        GestureDetector(
-            child: Container(
-                padding: const EdgeInsets.all(25),
-                // margin: const EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 219, 145, 145),
-                  // borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Center(
-                    child: Text(
-                  "Details",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                )))),
+        SizedBox(
+          height: 400,
+          width: 400,
+          child: Image.network(
+              "https://blog.vantagecircle.com/content/images/size/w1000/2019/06/company-event.png"),
+        ),
         GestureDetector(
           child: Container(
             padding: const EdgeInsets.all(25),
             // margin: const EdgeInsets.symmetric(horizontal: 25),
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 219, 145, 145),
+              color: Color.fromARGB(255, 218, 237, 242),
               // borderRadius: BorderRadius.circular(8),
             ),
             child: const Center(
               child: Text(
                 "Change Password",
                 style: TextStyle(
-                  color: Colors.white,
+                  // color: Color.fromARGB(255, 218, 237, 242),
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -52,22 +40,28 @@ class AdminProfile extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChangePassword()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ChangePassword()));
           },
         ),
+        SizedBox(
+          height: 10,
+        )
+        ,
         GestureDetector(
           child: Container(
             padding: const EdgeInsets.all(25),
             // margin: const EdgeInsets.symmetric(horizontal: 25),
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 229, 159, 159),
+              color: Color.fromARGB(255, 218, 237, 242),
               // borderRadius: BorderRadius.circular(8),
             ),
             child: const Center(
               child: Text(
                 "Logout",
                 style: TextStyle(
-                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -106,6 +100,6 @@ class AdminProfile extends StatelessWidget {
           },
         ),
       ],
-    ))));
+    )));
   }
 }

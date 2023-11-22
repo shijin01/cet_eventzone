@@ -38,7 +38,7 @@ class _AddDepartmentState extends State<AddDepartment> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.all(10),
@@ -102,6 +102,7 @@ class _AddDepartmentState extends State<AddDepartment> {
                     child: const Text("Year:"),
                   ),
                   DropdownMenu<int>(
+                    requestFocusOnTap: false,
                     initialSelection: selectedyear,
                     dropdownMenuEntries: dropdownmenuentries,
                     controller: yearcontroller,
@@ -153,7 +154,8 @@ class _AddDepartmentState extends State<AddDepartment> {
 
                   //
                 },
-                child: const Text("REGISTER"))
+                child: const Text("REGISTER")),
+                SizedBox(height:MediaQuery.of(context).viewInsets.bottom)
           ],
         ),
       ),
