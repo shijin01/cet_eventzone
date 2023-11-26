@@ -1,4 +1,4 @@
-import 'package:cet_eventzone/components/adddepartment.dart';
+import 'package:cet_eventzone/components/adduser.dart';
 import 'package:flutter/material.dart';
 // import 'package:cet_eventzone/main.dart';
 import 'package:cet_eventzone/dbconnect.dart';
@@ -30,7 +30,7 @@ class _SuperuserViewState extends State<SuperuserView> {
             child: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const AddDepartment()));
+                  builder: (context) =>  AddUser(typeofuser: "department")));
             }),
         body: SafeArea(
             child: Center(

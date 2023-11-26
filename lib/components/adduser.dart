@@ -1,14 +1,16 @@
 import 'package:cet_eventzone/dbconnect.dart';
 import 'package:flutter/material.dart';
 
-class AddDepartment extends StatefulWidget {
-  const AddDepartment({super.key});
+// ignore: must_be_immutable
+class AddUser extends StatefulWidget {
+  String? typeofuser;
+  AddUser({super.key, this.typeofuser});
 
   @override
-  State<AddDepartment> createState() => _AddDepartmentState();
+  State<AddUser> createState() => _AddUserState();
 }
 
-class _AddDepartmentState extends State<AddDepartment> {
+class _AddUserState extends State<AddUser> {
   final ScrollController controller = ScrollController();
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
@@ -119,9 +121,9 @@ class _AddDepartmentState extends State<AddDepartment> {
                 onPressed: () async {
                   final usercreated = await createuser(
                       context, emailcontroller.text, passwordcontroller.text);
-                  if (usercreated!.email == emailcontroller.text) {
-                    final lid = await insertintologin(
-                        emailcontroller.text, "department", usercreated.id);
+                  if (usercreated!=null && usercreated.email == emailcontroller.text) {
+                    final lid = await insertintologin(emailcontroller.text,
+                        widget.typeofuser!, usercreated.id);
                     final success = await insertintouserdetails(
                         lid,
                         namecontroller.text,
@@ -134,9 +136,21 @@ class _AddDepartmentState extends State<AddDepartment> {
                       departmentcontroller.text = "";
                       namecontroller.text = "";
                       yearcontroller.text = "1";
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.green[200],
-                          content: const Text("Successfully added")));
+                      
+                      if(widget.typeofuser=="user"){
+                        // ignore: use_build_context_synchronously
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.green[200],
+                            content: const Text("Successfully Registered,Please login")));
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context);
+                        }
+                        else{
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.green[200],
+                            content: const Text("Successfully added")));
+                        }
                     } else {
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -155,7 +169,7 @@ class _AddDepartmentState extends State<AddDepartment> {
                   //
                 },
                 child: const Text("REGISTER")),
-                SizedBox(height:MediaQuery.of(context).viewInsets.bottom)
+            SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
           ],
         ),
       ),

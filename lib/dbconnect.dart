@@ -14,6 +14,7 @@ Future<User?> createuser(BuildContext context, email, String password) async {
     );
     return res.user;
   } catch (err) {
+    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Error:$err"),
       backgroundColor: Colors.red,
@@ -61,7 +62,7 @@ Future<List<Map<String, dynamic>>> selectdepartmentusers() async {
   List<Map<String, dynamic>> d = [];
   for (var i in data) {
     print(i);
-    if (i['typeofuser'] != 'admin') {
+    if (i['typeofuser'] == 'department') {
       d.add(i);
     }
   }

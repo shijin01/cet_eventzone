@@ -1,6 +1,7 @@
 import 'package:cet_eventzone/clientsupa.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'adduser.dart';
 // import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -26,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   // final pref =await SharedPreferences.getInstance();
   // late final Session? session;
   // late final User? user;
-  String? ses="";
+  String? ses = "";
   Future<void> _signIn() async {
     try {
       setState(() {
@@ -39,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       final pref = await SharedPreferences.getInstance();
       final session = res.session;
-      await pref.setString("SESSION", session!.persistSessionString??"");
+      await pref.setString("SESSION", session!.persistSessionString ?? "");
       ses = pref.getString("SESSION");
       user = res.user;
       // print("user:$user");
@@ -90,49 +91,77 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text("Welcome"),
       ),
       body: SafeArea(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(15),
-            child: TextField(
-              decoration: const InputDecoration(
-                  hintText: "Username",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-              controller: _emailController,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(15),
+              child: TextField(
+                decoration: const InputDecoration(
+                    hintText: "Username",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+                controller: _emailController,
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: TextField(
-              obscureText: showpassword,
-              decoration: InputDecoration(
-                  hintText: "Password",
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          showpassword = !showpassword;
-                        });
-                      },
-                      icon: showpassword
-                          ? const Icon(Icons.visibility)
-                          : const Icon(Icons.visibility_off)),
-                  border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-              controller: passwordcontroller,
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: TextField(
+                obscureText: showpassword,
+                decoration: InputDecoration(
+                    hintText: "Password",
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            showpassword = !showpassword;
+                          });
+                        },
+                        icon: showpassword
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off)),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+                controller: passwordcontroller,
+              ),
             ),
-          ),
-          ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 // print("user" + _emailController.text);
                 if (!_isLoading) {
                   _signIn();
                 }
               },
-              child: const Text("LOGIN"))
-        ],
-      )),
+              child: const Text("LOGIN"),
+            ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(25),
+                // margin: const EdgeInsets.symmetric(horizontal: 25),
+                decoration: const BoxDecoration(
+                  // color: Color.fromARGB(255, 230, 231, 237)
+                  // borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Create user",
+                    style: TextStyle(
+                     decoration: TextDecoration.underline,
+                       color: Color.fromARGB(255, 44, 40, 161)   ,                  fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>  AddUser(typeofuser: "user")));
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 }

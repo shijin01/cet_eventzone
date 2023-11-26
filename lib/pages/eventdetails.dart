@@ -44,12 +44,53 @@ class _EventDetailsState extends State<EventDetails> {
       body: SafeArea(
           child: Column(
         children: [
-          Text(
-            widget.eventname,
-            style: const TextStyle(
-                color: Color.fromARGB(255, 88, 244, 86), fontSize: 40.0,
-                fontFamily: "Algerian"),
+          Stack(
+            children: <Widget>[
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage('https://picsum.photos/250?image=9'),
+                  ),
+                ),
+                height: MediaQuery.sizeOf(context).height * .5,
+                width: MediaQuery.sizeOf(context).width * .75,
+              ),
+              Container(
+                  alignment: Alignment.bottomCenter,
+                  height: MediaQuery.sizeOf(context).height * .5,
+                  width: MediaQuery.sizeOf(context).width * .75,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      gradient: LinearGradient(
+                          begin: FractionalOffset.topCenter,
+                          end: FractionalOffset.bottomCenter,
+                          colors: [
+                            Colors.grey.withOpacity(0.0),
+                            Colors.black,
+                          ],
+                          stops: const [
+                            0.0,
+                            1.0
+                          ])),
+                  child: Text(
+                    widget.eventname,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontFamily: "Algerian"),
+                  )),
+            ],
           ),
+
+          // ,Text(
+          //   widget.eventname,
+          //   style: const TextStyle(
+          //       color: Color.fromARGB(255, 88, 244, 86),
+          //       fontSize: 40.0,
+          //       ),
+          // ),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,9 +98,9 @@ class _EventDetailsState extends State<EventDetails> {
               Text(
                 widget.eventdate,
                 style: TextStyle(
-                    color: Colors.teal[300],
-                    fontSize: 20.0,
-                    ),
+                  color: Colors.teal[300],
+                  fontSize: 20.0,
+                ),
               ),
               const SizedBox(width: 5),
               Text(
