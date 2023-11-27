@@ -1,7 +1,7 @@
 import 'package:cet_eventzone/components/homescreen.dart';
 import 'package:cet_eventzone/dbconnect.dart';
+import 'package:cet_eventzone/main.dart';
 import 'package:flutter/material.dart';
-
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
 
@@ -89,14 +89,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                     final ischanged =
                         changeuserpassword(context, conpasswordcontroller.text);
                     if (await ischanged) {
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Successfull"),
                         backgroundColor: Colors.green[200],
                       ));
+                      // ignore: use_build_context_synchronously
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomeScreen(selectedIndex: 2)),
+                            builder: (context) => HomeScreen(
+                                usertype: usertype, selectedIndex: 2)),
                       );
                     }
                   },

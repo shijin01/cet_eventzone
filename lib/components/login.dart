@@ -1,4 +1,5 @@
 import 'package:cet_eventzone/clientsupa.dart';
+import 'package:cet_eventzone/components/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'adduser.dart';
@@ -28,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   // late final Session? session;
   // late final User? user;
   String? ses = "";
+  late String utype;
   Future<void> _signIn() async {
     try {
       setState(() {
@@ -40,8 +42,17 @@ class _LoginPageState extends State<LoginPage> {
       );
       final pref = await SharedPreferences.getInstance();
       final session = res.session;
+      final userlogindata = await supabase
+          .from('login')
+          .select('id,username,typeofuser')
+          .match({'username': _emailController.text});
+      print(userlogindata);
       await pref.setString("SESSION", session!.persistSessionString ?? "");
-      ses = pref.getString("SESSION");
+      await pref.setInt("lid", userlogindata[0]['id']);
+      await pref.setString(
+          "typeofuser", userlogindata[0]['typeofuser'].toString());
+      ses = await pref.getString("SESSION");
+      utype = userlogindata[0]['typeofuser'];
       user = res.user;
       // print("user:$user");
     } on AuthException catch (error) {
@@ -54,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
     } catch (error) {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Unexpected error occurred'),
+        content: Text("Unexpected error occurred::$error"),
         // ignore: use_build_context_synchronously
         backgroundColor: Theme.of(context).colorScheme.error,
       ));
@@ -64,7 +75,14 @@ class _LoginPageState extends State<LoginPage> {
           _isLoading = false;
         });
         if (ses != "") {
-          Navigator.of(context).pushReplacementNamed('/homepage');
+          print("inside");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                    usertype: utype,
+                    selectedIndex: 0)),
+          );
         }
       }
     }
@@ -138,15 +156,16 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(25),
                 // margin: const EdgeInsets.symmetric(horizontal: 25),
                 decoration: const BoxDecoration(
-                  // color: Color.fromARGB(255, 230, 231, 237)
-                  // borderRadius: BorderRadius.circular(8),
-                ),
+                    // color: Color.fromARGB(255, 230, 231, 237)
+                    // borderRadius: BorderRadius.circular(8),
+                    ),
                 child: const Center(
                   child: Text(
                     "Create user",
                     style: TextStyle(
-                     decoration: TextDecoration.underline,
-                       color: Color.fromARGB(255, 44, 40, 161)   ,                  fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      color: Color.fromARGB(255, 44, 40, 161),
+                      fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
                   ),
@@ -156,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>  AddUser(typeofuser: "user")));
+                        builder: (context) => AddUser(typeofuser: "user")));
               },
             )
           ],

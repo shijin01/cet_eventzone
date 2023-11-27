@@ -4,13 +4,16 @@ import 'package:cet_eventzone/pages/splash_page.dart';
 import 'package:cet_eventzone/secretkey.dart';
 import 'package:flutter/material.dart';
 import 'package:cet_eventzone/components/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+late String usertype;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-      url: supabaseUrl, anonKey: anonkey);
+  await Supabase.initialize(url: supabaseUrl, anonKey: anonkey);
+  final pref = await SharedPreferences.getInstance();
+  usertype =  pref.getString("typeofuser")??"department";
   runApp(const MyApp());
 }
 
@@ -31,7 +34,10 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (_) => const SplashPage(),
         '/login': (_) => const LoginPage(),
-        '/homepage': (_) => const HomeScreen(selectedIndex: 0,),
+        '/homepage': (_) =>  HomeScreen(
+              usertype: usertype,
+              selectedIndex: 0,
+            ),
       },
       // home: const MyHomePage(title: 'Campus EventZone'),
     );

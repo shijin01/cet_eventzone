@@ -105,6 +105,8 @@ void logout(BuildContext context) async {
     await supabase.auth.signOut();
     final pref = await SharedPreferences.getInstance();
     await pref.setString("SESSION", "");
+    await pref.setInt("lid", -999999);
+    await pref.setString("typeofuser", "");
     // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacementNamed('/login');
   } catch (err) {
