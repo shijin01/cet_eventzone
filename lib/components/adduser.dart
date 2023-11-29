@@ -11,7 +11,7 @@ class AddUser extends StatefulWidget {
 }
 
 class _AddUserState extends State<AddUser> {
-  final ScrollController controller = ScrollController();
+  // final ScrollController controller = ScrollController();
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   final namecontroller = TextEditingController();

@@ -1,5 +1,7 @@
 import 'package:cet_eventzone/components/adminprofile.dart';
 import 'package:cet_eventzone/components/superuserview.dart';
+import 'package:cet_eventzone/departmentpages/addevent.dart';
+import 'package:cet_eventzone/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:cet_eventzone/main.dart';
@@ -111,6 +113,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('EventZone'),
       ),
+      floatingActionButton: usertype == "department"
+          ? FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AddEvent()));
+              })
+          : null,
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: bottomnavigator,
