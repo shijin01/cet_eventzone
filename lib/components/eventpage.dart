@@ -1,3 +1,4 @@
+import 'package:cet_eventzone/departmentpages/addevent.dart';
 import 'package:cet_eventzone/pages/eventdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:cet_eventzone/main.dart';
@@ -15,6 +16,14 @@ class _EventWidgetState extends State<EventWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: (usertype == "department")
+          ? FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AddEvent()));
+              })
+          : null,
       body: SafeArea(
         child: Center(
           child: Column(
