@@ -140,3 +140,45 @@ Future<bool> changeuserpassword(BuildContext context, String pwd) async {
     return false;
   }
 }
+
+Future<bool> addeventdetails(
+    String eventname,
+    String eventDetails,
+    String eventdate,
+    String department,
+    String? imagename,
+    bool ticket,
+    String? ticketdate,
+    String? price,
+    String? numberofticket,
+    String? upi) async {
+  bool success = true;
+  // print("Price:" + price.toString());
+  // print("No of ticket:" + numberofticket.toString());
+
+  try {
+    if (price == null || price == "") price = null;
+    if (numberofticket == null || numberofticket == "") numberofticket = null;
+    if (ticketdate == null || ticketdate == "") ticketdate = null;
+    await supabase.from('events').insert([
+      {
+        'event_name': eventname,
+        'event_description': eventDetails,
+        'department': department,
+        'ticket': ticket,
+        'image': imagename,
+        'max_no_of_tickets': numberofticket,
+        'remaining_ticket': 0,
+        'price': price,
+        'event_date': eventdate,
+        'ticket_book_date': ticketdate,
+        'upi': upi
+      }
+    ]);
+  } catch (err) {
+    // print("Error inside insert:$err");
+    success = false;
+  }
+
+  return success;
+}

@@ -1,5 +1,6 @@
 import 'package:cet_eventzone/components/adminprofile.dart';
 import 'package:cet_eventzone/components/superuserview.dart';
+import 'package:cet_eventzone/departmentpages/depteventpage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:cet_eventzone/main.dart';
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ];
     } else if (widget.usertype == 'department') {
       _widgetOptions = const <Widget>[
-        EventWidget(),
+        DepartEvent(),
         Text("department"),
         AdminProfile(),
       ];

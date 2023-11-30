@@ -1,24 +1,28 @@
 import 'package:cet_eventzone/departmentpages/addevent.dart';
+import 'package:cet_eventzone/main.dart';
 import 'package:cet_eventzone/pages/eventdetails.dart';
 import 'package:flutter/material.dart';
-import 'package:cet_eventzone/main.dart';
 
-class EventWidget extends StatefulWidget {
-  const EventWidget({super.key});
-  
+class DepartEvent extends StatefulWidget {
+  const DepartEvent({super.key});
+
   @override
-  State<EventWidget> createState() => _EventWidgetState();
+  State<DepartEvent> createState() => _DepartEventState();
 }
 
-class _EventWidgetState extends State<EventWidget> {
+class _DepartEventState extends State<DepartEvent> {
   final _stream = supabase.from('events').stream(primaryKey: ['id']);
-  
 
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AddEvent()));
+              })
+        ,
       body: SafeArea(
         child: Center(
           child: Column(
