@@ -1,3 +1,4 @@
+import 'package:cet_eventzone/clientsupa.dart';
 import 'package:flutter/material.dart';
 
 class EventDetails extends StatefulWidget {
@@ -35,8 +36,18 @@ class _EventDetailsState extends State<EventDetails> {
   // bool? ticket;
   // int? maxticket, remticket;
   // double? price;
+  late String imageurl;
+  Future<void> getImageURL() async {
+    final supabase = getclient();
+    if (widget.image != null && widget.image != "") {
+      imageurl =
+          supabase.storage.from('eventphoto').getPublicUrl(widget.image!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getImageURL();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details'),
@@ -76,21 +87,13 @@ class _EventDetailsState extends State<EventDetails> {
                           ])),
                   child: Text(
                     widget.eventname,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 30.0,
                         fontFamily: "Algerian"),
                   )),
             ],
           ),
-
-          // ,Text(
-          //   widget.eventname,
-          //   style: const TextStyle(
-          //       color: Color.fromARGB(255, 88, 244, 86),
-          //       fontSize: 40.0,
-          //       ),
-          // ),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -114,7 +117,7 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(
               height: 100,
               width: 100,
-              child: Image.network("https://picsum.photos/250?image=9"),
+              child: Image.network(imageurl),
             )
           else
             const Text(""),
