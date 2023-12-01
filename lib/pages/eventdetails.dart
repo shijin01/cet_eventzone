@@ -54,7 +54,7 @@ class _EventDetailsState extends State<EventDetails> {
       typeouser = prefs.getString("typeofuser");
     });
     // typeouser = prefs.getString("typeofuser");
-    print(typeouser);
+    // print(typeouser);
   }
 
   @override
@@ -153,10 +153,11 @@ class _EventDetailsState extends State<EventDetails> {
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         int? lid = prefs.getInt("lid");
+                        // ignore: use_build_context_synchronously
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UpiPage(
+                                builder: (context) => UpiPageView(
                                       upi: widget.upi,
                                       reciever: widget.reciever,
                                       eventname: widget.eventname,

@@ -1,4 +1,3 @@
-import 'package:cet_eventzone/departmentpages/addevent.dart';
 import 'package:cet_eventzone/pages/eventdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:cet_eventzone/main.dart';

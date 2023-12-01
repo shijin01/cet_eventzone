@@ -61,7 +61,7 @@ Future<List<Map<String, dynamic>>> selectdepartmentusers() async {
       await supabase.from('login').select('id,username,typeofuser');
   List<Map<String, dynamic>> d = [];
   for (var i in data) {
-    print(i);
+    // print(i);
     if (i['typeofuser'] == 'department') {
       d.add(i);
     }
@@ -80,6 +80,7 @@ void deletedepartmentusers(BuildContext context, int id) async {
       final supaAuth = getAuth();
       try {
         await supaAuth.auth.admin.deleteUser(data1[0]['uid']);
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.green[200],
             content: const Text("Successfully deleted")));
@@ -110,6 +111,7 @@ void logout(BuildContext context) async {
     // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacementNamed('/login');
   } catch (err) {
+    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("Error occured:$err")));
   }
@@ -208,4 +210,25 @@ Future<bool> bookticket(int eid, int lid, String ticketno) async {
   }
 
   return success;
+}
+
+Future<List<Map<String, dynamic>>> selectticketdetails() async {
+  // print("inside fun");
+  // const typeofuser = "department";
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  int? lid = prefs.getInt("lid");
+  print("------\n\nData iside ticketdetails:\n");
+  print(lid);
+  final List<Map<String, dynamic>> data = await supabase
+      .from('tickets')
+      .select('event_id,lid,ticket_no,events(event_name,department)');
+
+  List<Map<String, dynamic>> d = [];
+  for (var i in data) {
+    // print(i);
+    if (i['lid'] == lid) {
+      d.add(i);
+    }
+  }
+  return d;
 }

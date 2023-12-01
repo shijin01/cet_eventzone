@@ -1,16 +1,14 @@
-import 'dart:ffi';
-
 import 'package:cet_eventzone/components/homescreen.dart';
 import 'package:cet_eventzone/dbconnect.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:upi_india/upi_india.dart';
 
-class UpiPage extends StatefulWidget {
+// ignore: must_be_immutable
+class UpiPageView extends StatefulWidget {
   String? upi, reciever, eventname;
   int? price, eid, lid;
-  UpiPage(
+  UpiPageView(
       {super.key,
       required this.upi,
       required this.reciever,
@@ -20,21 +18,21 @@ class UpiPage extends StatefulWidget {
       required this.lid});
 
   @override
-  State<UpiPage> createState() => _UpiPageState();
+  State<UpiPageView> createState() => _UpiPageViewState();
 }
 
-class _UpiPageState extends State<UpiPage> {
+class _UpiPageViewState extends State<UpiPageView> {
   String? typeouser;
   Future<UpiResponse>? _transaction;
-  UpiIndia _upiIndia = UpiIndia();
+  final UpiIndia _upiIndia = UpiIndia();
   List<UpiApp>? apps;
 
-  TextStyle header = TextStyle(
+  TextStyle header = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
   );
 
-  TextStyle value = TextStyle(
+  TextStyle value = const TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
@@ -70,9 +68,10 @@ class _UpiPageState extends State<UpiPage> {
   }
 
   Widget displayUpiApps() {
-    if (apps == null)
-      return Center(child: CircularProgressIndicator());
-    else if (apps!.length == 0)
+    if (apps == null) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (apps!.isEmpty)
+      // ignore: curly_braces_in_flow_control_structures
       return Center(
         child: Text(
           "No apps found to handle transaction.",
@@ -80,6 +79,7 @@ class _UpiPageState extends State<UpiPage> {
         ),
       );
     else
+      // ignore: curly_braces_in_flow_control_structures
       return Align(
         alignment: Alignment.topCenter,
         child: SingleChildScrollView(
@@ -92,16 +92,19 @@ class _UpiPageState extends State<UpiPage> {
                   final booked = await bookticket(widget.eid!, widget.lid!,
                       "${widget.eventname?.substring(0, 4)}${widget.eid}${DateTime.now().toIso8601String()}");
                   if (booked) {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Successfull"),
                       backgroundColor: Colors.green[200],
                     ));
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Error"),
                       backgroundColor: Colors.red,
                     ));
                   }
+                  // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -109,6 +112,7 @@ class _UpiPageState extends State<UpiPage> {
                               usertype: typeouser!, selectedIndex: 0)));
                   setState(() {});
                 },
+                // ignore: sized_box_for_whitespace
                 child: Container(
                   height: 100,
                   width: 100,
@@ -134,12 +138,16 @@ class _UpiPageState extends State<UpiPage> {
 
   String _upiErrorHandler(error) {
     switch (error) {
+      // ignore: type_literal_in_constant_pattern
       case UpiIndiaAppNotInstalledException:
         return 'Requested app not installed on device';
+      // ignore: type_literal_in_constant_pattern
       case UpiIndiaUserCancelledException:
         return 'You cancelled the transaction';
+      // ignore: type_literal_in_constant_pattern
       case UpiIndiaNullResponseException:
         return 'Requested app didn\'t return any response';
+      // ignore: type_literal_in_constant_pattern
       case UpiIndiaInvalidParametersException:
         return 'Requested app cannot handle the transaction';
       default:
@@ -150,16 +158,16 @@ class _UpiPageState extends State<UpiPage> {
   void _checkTxnStatus(String status) {
     switch (status) {
       case UpiPaymentStatus.SUCCESS:
-        print('Transaction Successful');
+        // print('Transaction Successful');
         break;
       case UpiPaymentStatus.SUBMITTED:
-        print('Transaction Submitted');
+        // print('Transaction Submitted');
         break;
       case UpiPaymentStatus.FAILURE:
-        print('Transaction Failed');
+        // print('Transaction Failed');
         break;
       default:
-        print('Received an Unknown transaction status');
+      // print('Received an Unknown transaction status');
     }
   }
 
@@ -185,7 +193,7 @@ class _UpiPageState extends State<UpiPage> {
     getusertype();
     return Scaffold(
       appBar: AppBar(
-        title: Text('UPI'),
+        title: const Text('UPI'),
       ),
       body: Column(
         children: <Widget>[
@@ -214,6 +222,7 @@ class _UpiPageState extends State<UpiPage> {
 
                   // If we have data then definitely we will have UpiResponse.
                   // It cannot be null
+                  // ignore: no_leading_underscores_for_local_identifiers
                   UpiResponse _upiResponse = snapshot.data!;
 
                   // Data in UpiResponse can be null. Check before printing
@@ -238,7 +247,8 @@ class _UpiPageState extends State<UpiPage> {
                     ),
                   );
                 } else
-                  return Center(
+                  // ignore: curly_braces_in_flow_control_structures
+                  return const Center(
                     child: Text(''),
                   );
               },
