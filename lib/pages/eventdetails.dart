@@ -1,29 +1,31 @@
 import 'package:cet_eventzone/clientsupa.dart';
+import 'package:cet_eventzone/userscomponent/upipage.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EventDetails extends StatefulWidget {
   final int id;
   final String eventname, eventdescription, department, eventdate;
-  final String? image, upi, ticketbookdate;
+  final String? image, upi, ticketbookdate, reciever;
   final bool? ticket;
   final int? maxticket, remticket;
   final int? price;
 
-  const EventDetails({
-    super.key,
-    required this.id,
-    required this.eventname,
-    required this.eventdescription,
-    required this.department,
-    required this.eventdate,
-    required this.ticket,
-    this.image,
-    this.upi,
-    this.ticketbookdate,
-    this.maxticket,
-    this.remticket,
-    this.price,
-  });
+  const EventDetails(
+      {super.key,
+      required this.id,
+      required this.eventname,
+      required this.eventdescription,
+      required this.department,
+      required this.eventdate,
+      required this.ticket,
+      required this.image,
+      required this.upi,
+      required this.ticketbookdate,
+      required this.maxticket,
+      required this.remticket,
+      required this.price,
+      required this.reciever});
 
   @override
   State<EventDetails> createState() => _EventDetailsState();
@@ -37,6 +39,7 @@ class _EventDetailsState extends State<EventDetails> {
   // int? maxticket, remticket;
   // double? price;
   late String imageurl;
+  String? typeouser;
   Future<void> getImageURL() async {
     final supabase = getclient();
     if (widget.image != null && widget.image != "") {
@@ -45,8 +48,18 @@ class _EventDetailsState extends State<EventDetails> {
     }
   }
 
+  getusertype() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      typeouser = prefs.getString("typeofuser");
+    });
+    // typeouser = prefs.getString("typeofuser");
+    print(typeouser);
+  }
+
   @override
   Widget build(BuildContext context) {
+    getusertype();
     getImageURL();
     return Scaffold(
       appBar: AppBar(
@@ -134,7 +147,27 @@ class _EventDetailsState extends State<EventDetails> {
                     "Ticket Price:${widget.price}\nLast date to book ticket:${widget.ticketbookdate}",
                     style: const TextStyle(
                         color: Color.fromRGBO(213, 42, 42, 1), fontSize: 20.0)),
-                ElevatedButton(onPressed: () {}, child: const Text("BOOK"))
+                if (typeouser?.compareTo("user") == 0)
+                  ElevatedButton(
+                      onPressed: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        int? lid = prefs.getInt("lid");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UpiPage(
+                                      upi: widget.upi,
+                                      reciever: widget.reciever,
+                                      eventname: widget.eventname,
+                                      price: widget.price,
+                                      eid: widget.id,
+                                      lid: lid,
+                                    )));
+                      },
+                      child: const Text("BOOK"))
+                else
+                  const Text("")
               ],
             )
           else

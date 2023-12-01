@@ -168,11 +168,38 @@ Future<bool> addeventdetails(
         'ticket': ticket,
         'image': imagename,
         'max_no_of_tickets': numberofticket,
-        'remaining_ticket': 0,
+        'remaining_ticket': numberofticket,
         'price': price,
         'event_date': eventdate,
         'ticket_book_date': ticketdate,
         'upi': upi
+      }
+    ]);
+  } catch (err) {
+    // print("Error inside insert:$err");
+    success = false;
+  }
+
+  return success;
+}
+
+Future<bool> bookticket(int eid, int lid, String ticketno) async {
+  bool success = true;
+
+  try {
+    final data = await supabase
+        .from('events')
+        .select('remaining_ticket')
+        .match({'id': eid});
+    await supabase
+        .from('events')
+        .update({'remaining_ticket': data[0]["remaining_ticket"] - 1}).match(
+            {'id': eid});
+    await supabase.from('tickets').insert([
+      {
+        'event_id': eid,
+        'lid': lid,
+        'ticket_no': ticketno,
       }
     ]);
   } catch (err) {

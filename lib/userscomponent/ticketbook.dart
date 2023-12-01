@@ -7,8 +7,12 @@ class TicketBook extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SafeArea(child: Center(
-        child: Column(
-          children: [],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              
+            ],
+          ),
         ),
       )),
 

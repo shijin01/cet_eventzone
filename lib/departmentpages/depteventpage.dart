@@ -75,6 +75,7 @@ class _DepartEventState extends State<DepartEvent> {
                                             ticketbookdate: data[index]
                                                 ['ticket_book_date'],
                                             upi: data[index]['upi'],
+                                            reciever: data[index]['upi'],
                                           )),
                                 );
                               },

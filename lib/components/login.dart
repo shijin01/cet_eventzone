@@ -49,8 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       print(userlogindata);
       await pref.setString("SESSION", session!.persistSessionString ?? "");
       await pref.setInt("lid", userlogindata[0]['id']);
-      await pref.setString(
-          "typeofuser", userlogindata[0]['typeofuser'].toString());
+      await pref.setString("typeofuser", userlogindata[0]['typeofuser']);
       ses = await pref.getString("SESSION");
       utype = userlogindata[0]['typeofuser'];
       user = res.user;
@@ -79,9 +78,8 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => HomeScreen(
-                    usertype: utype,
-                    selectedIndex: 0)),
+                builder: (context) =>
+                    HomeScreen(usertype: utype, selectedIndex: 0)),
           );
         }
       }
@@ -154,11 +152,7 @@ class _LoginPageState extends State<LoginPage> {
             GestureDetector(
               child: Container(
                 padding: const EdgeInsets.all(25),
-                // margin: const EdgeInsets.symmetric(horizontal: 25),
-                decoration: const BoxDecoration(
-                    // color: Color.fromARGB(255, 230, 231, 237)
-                    // borderRadius: BorderRadius.circular(8),
-                    ),
+                decoration: const BoxDecoration(),
                 child: const Center(
                   child: Text(
                     "Create user",
