@@ -1,7 +1,9 @@
 import 'package:cet_eventzone/components/homescreen.dart';
 import 'package:cet_eventzone/dbconnect.dart';
-import 'package:cet_eventzone/main.dart';
+import 'package:cet_eventzone/pages/splash_page.dart';
+// import 'package:cet_eventzone/main.dart';
 import 'package:flutter/material.dart';
+
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
 
@@ -94,7 +96,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         content: Text("Successfull"),
                         backgroundColor: Colors.green[200],
                       ));
-                      // ignore: use_build_context_synchronously
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

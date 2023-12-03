@@ -46,6 +46,8 @@ dependencies:
   google_fonts: ^6.1.0
   ticket_widget: ^1.0.2
   ticket_material: ^0.3.1
+  onesignal_flutter: ^5.0.4
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

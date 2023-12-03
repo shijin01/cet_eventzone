@@ -46,6 +46,7 @@ class _EventDetailsState extends State<EventDetails> {
       imageurl =
           supabase.storage.from('eventphoto').getPublicUrl(widget.image!);
     }
+    
   }
 
   getusertype() async {
