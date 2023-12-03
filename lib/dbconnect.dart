@@ -215,9 +215,8 @@ Future<bool> bookticket(int eid, int lid, String ticketno) async {
 Future<List<Map<String, dynamic>>> selectticketdetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   int? lid = prefs.getInt("lid");
-  final List<Map<String, dynamic>> data = await supabase
-      .from('tickets')
-      .select('event_id,lid,ticket_no,events(event_name,department,event_date)');
+  final List<Map<String, dynamic>> data = await supabase.from('tickets').select(
+      'event_id,lid,ticket_no,events(event_name,department,event_date)');
 
   List<Map<String, dynamic>> d = [];
   for (var i in data) {
@@ -227,5 +226,3 @@ Future<List<Map<String, dynamic>>> selectticketdetails() async {
   }
   return d;
 }
-
-

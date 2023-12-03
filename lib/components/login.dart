@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
           .from('login')
           .select('id,username,typeofuser')
           .match({'username': _emailController.text});
-      print(userlogindata);
+      // print(userlogindata);
       await pref.setString("SESSION", session!.persistSessionString ?? "");
       await pref.setInt("lid", userlogindata[0]['id']);
       await pref.setString("typeofuser", userlogindata[0]['typeofuser']);

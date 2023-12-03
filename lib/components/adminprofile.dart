@@ -1,8 +1,7 @@
-import 'package:cet_eventzone/clientsupa.dart';
+
 import 'package:cet_eventzone/components/changepassword.dart';
 import 'package:cet_eventzone/dbconnect.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminProfile extends StatelessWidget {
   const AdminProfile({super.key});
@@ -48,8 +47,7 @@ class AdminProfile extends StatelessWidget {
         ),
         SizedBox(
           height: 10,
-        )
-        ,
+        ),
         GestureDetector(
           child: Container(
             padding: const EdgeInsets.all(25),
