@@ -109,7 +109,10 @@ void logout(BuildContext context) async {
     await pref.setInt("lid", -999999);
     await pref.setString("typeofuser", "");
     // ignore: use_build_context_synchronously
-    Navigator.of(context).pushReplacementNamed('/login');
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      '/login',
+      (route) => false,
+    );
   } catch (err) {
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)

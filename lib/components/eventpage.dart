@@ -1,20 +1,18 @@
 import 'package:cet_eventzone/pages/eventdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:cet_eventzone/main.dart';
+import 'package:intl/intl.dart';
 
 class EventWidget extends StatefulWidget {
   const EventWidget({super.key});
-  
+
   @override
   State<EventWidget> createState() => _EventWidgetState();
 }
 
 class _EventWidgetState extends State<EventWidget> {
   final _stream = supabase.from('events').stream(primaryKey: ['id']);
-  
 
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +39,9 @@ class _EventWidgetState extends State<EventWidget> {
                             child: ListTile(
                               title: Text(data[index]['event_name'] +
                                       " " +
-                                      data[index]['event_date'] ??
+                                      DateFormat('dd-mm-yyyy').format(
+                                          DateFormat('yyyy-mm-dd').parse(
+                                              data[index]['event_date'])) ??
                                   " "),
                               subtitle: Text(data[index]['department']),
                               // trailing: Icon(Icons.more_vert),
@@ -56,8 +56,10 @@ class _EventWidgetState extends State<EventWidget> {
                                                 ['event_name'],
                                             eventdescription: data[index]
                                                 ['event_description'],
-                                            eventdate: data[index]
-                                                ['event_date'],
+                                            eventdate: DateFormat('dd-mm-yyyy')
+                                                .format(DateFormat('yyyy-mm-dd')
+                                                    .parse(data[index]
+                                                        ['event_date'])),
                                             department: data[index]
                                                 ['department'],
                                             ticket: data[index]['ticket'],

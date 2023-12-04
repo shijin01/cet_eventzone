@@ -1,5 +1,7 @@
 import 'package:cet_eventzone/clientsupa.dart';
+import 'package:cet_eventzone/departmentpages/participantlist.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -23,6 +25,7 @@ class _ParticipantsViewState extends State<ParticipantsView> {
         .from('events')
         .select('*')
         .match({'department': department[0]['department'], 'ticket': 'TRUE'});
+    // print("Data:$data1");
     if (mounted) {
       setState(() {
         data = data1;
@@ -51,7 +54,22 @@ class _ParticipantsViewState extends State<ParticipantsView> {
                       return Card(
                         child: ListTile(
                           title: Text(data[index]['event_name']),
-                          subtitle: Text(data[index]['event_date']),
+                          subtitle: Text(DateFormat('dd-mm-yyyy').format(
+                              DateFormat('yyyy-mm-dd')
+                                  .parse(data[index]['event_date']))),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ParticipantList(
+                                    eid: data[index]['id'],
+                                    eventname: data[index]['event_name'],
+                                    eventdate: DateFormat('dd-mm-yyyy').format(
+                                        DateFormat('yyyy-mm-dd')
+                                            .parse(data[index]['event_date']))),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },

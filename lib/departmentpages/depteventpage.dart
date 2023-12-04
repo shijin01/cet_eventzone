@@ -2,6 +2,7 @@ import 'package:cet_eventzone/departmentpages/addevent.dart';
 import 'package:cet_eventzone/main.dart';
 import 'package:cet_eventzone/pages/eventdetails.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DepartEvent extends StatefulWidget {
   const DepartEvent({super.key});
@@ -17,12 +18,11 @@ class _DepartEventState extends State<DepartEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-              child: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const AddEvent()));
-              })
-        ,
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const AddEvent()));
+          }),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -45,8 +45,10 @@ class _DepartEventState extends State<DepartEvent> {
                           return Card(
                             child: ListTile(
                               title: Text(data[index]['event_name'] +
-                                      " " +
-                                      data[index]['event_date'] ??
+                                      "\n" +
+                                      DateFormat('dd-mm-yyyy').format(
+                                          DateFormat('yyyy-mm-dd').parse(
+                                              data[index]['event_date'])) ??
                                   " "),
                               subtitle: Text(data[index]['department']),
                               // trailing: Icon(Icons.more_vert),

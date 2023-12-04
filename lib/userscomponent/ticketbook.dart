@@ -1,5 +1,6 @@
 import 'package:cet_eventzone/dbconnect.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 // import 'package:flutter_ticket_view/ticketview.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +77,10 @@ class _TicketBookState extends State<TicketBook> {
                                           fontWeight: FontWeight.w700),
                                     ),
                                     Text(
-                                      data1[index]['events']['event_date'],
+                                      DateFormat('dd-mm-yyyy').format(
+                                          DateFormat('yyyy-mm-dd').parse(
+                                              data1[index]['events']
+                                                  ['event_date'])),
                                       style: GoogleFonts.poppins(
                                           color: Colors.black, fontSize: 12),
                                     )
@@ -123,8 +127,15 @@ class _TicketBookState extends State<TicketBook> {
                                                         data1[index]['events']
                                                             ['department'],
                                                         'Date',
-                                                        data1[index]['events']
-                                                            ['event_date']),
+                                                        DateFormat('dd-mm-yyyy')
+                                                            .format(DateFormat(
+                                                                    'yyyy-mm-dd')
+                                                                .parse(data1[
+                                                                            index]
+                                                                        [
+                                                                        'events']
+                                                                    [
+                                                                    'event_date']))),
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
