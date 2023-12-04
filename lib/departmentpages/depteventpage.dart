@@ -12,7 +12,11 @@ class DepartEvent extends StatefulWidget {
 }
 
 class _DepartEventState extends State<DepartEvent> {
-  final _stream = supabase.from('events').stream(primaryKey: ['id']);
+  final _stream =
+      supabase.from('events').stream(primaryKey: ['id']).order('id');
+  final searchcontroller = TextEditingController();
+  String searchvalue = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,36 @@ class _DepartEventState extends State<DepartEvent> {
         child: Center(
           child: Column(
             children: <Widget>[
-              const Text("Helo"),
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  autofocus: false,
+                  controller: searchcontroller,
+                  onChanged: (value) {
+                    // print("Value:$value");
+                    setState(() {
+                      searchvalue = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                      ),
+                      hintText: "Search",
+                      prefixIcon:
+                          Icon(Icons.search_rounded, color: Colors.blue),
+                      hintStyle: const TextStyle(
+                          color: Color.fromARGB(255, 14, 58, 95)),
+                      suffix: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              searchcontroller.text = "";
+                              searchvalue = '';
+                            });
+                          },
+                          icon: const Icon(Icons.close))),
+                ),
+              ),
               Expanded(
                 child: StreamBuilder<List<Map<String, dynamic>>>(
                   stream: _stream,
@@ -39,13 +72,31 @@ class _DepartEventState extends State<DepartEvent> {
                     if (snapshot.hasData) {
                       List<Map<String, dynamic>> data =
                           snapshot.data as List<Map<String, dynamic>>;
+                      if (searchvalue.isNotEmpty) {
+                        data = data.where((element) {
+                          // print("Element:${element['event_name']}");
+                          if (element['event_name']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchvalue.toLowerCase()) ||
+                              element['department']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchvalue.toLowerCase())) {
+                            return true;
+                          } else {
+                            return false;
+                          }
+                        }).toList();
+                        // print("Data:$data");
+                      }
                       return ListView.builder(
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
                               title: Text(data[index]['event_name'] +
-                                      "\n" +
+                                      "\t\t" +
                                       DateFormat('dd-mm-yyyy').format(
                                           DateFormat('yyyy-mm-dd').parse(
                                               data[index]['event_date'])) ??

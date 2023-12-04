@@ -1,16 +1,24 @@
+import 'dart:async';
+
+// import 'package:cet_eventzone/clientsupa.dart';
+import 'package:cet_eventzone/main.dart';
 import 'package:cet_eventzone/pages/eventdetails.dart';
 import 'package:flutter/material.dart';
-import 'package:cet_eventzone/main.dart';
 import 'package:intl/intl.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 
-class EventWidget extends StatefulWidget {
-  const EventWidget({super.key});
+class NewEventPage extends StatefulWidget {
+  const NewEventPage({super.key});
 
   @override
-  State<EventWidget> createState() => _EventWidgetState();
+  State<NewEventPage> createState() => _NewEventPageState();
 }
 
-class _EventWidgetState extends State<EventWidget> {
+class _NewEventPageState extends State<NewEventPage> {
+  // final StreamController<List<Map<String, dynamic>>> _streamController =
+  //     StreamController<List<Map<String, dynamic>>>();
+  // Stream<List<Map<String, dynamic>>> get _stream => _streamController.stream;
+
   final _streamdata =
       supabase.from('events').stream(primaryKey: ['id']).order('id');
   final searchcontroller = TextEditingController();
