@@ -85,45 +85,70 @@ class _EventWidgetState extends State<EventWidget> {
                   return ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          title: Text(data[index]['event_name'] +
-                                  " " +
+                      return Container(
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(2),
+                        // decoration: const BoxDecoration(
+                        //     borderRadius: BorderRadius.all(Radius.circular(25)),
+                        //     gradient: LinearGradient(colors: [
+                        //       // Color.fromARGB(255, 255, 106, 134),
+                        //       Color.fromARGB(255, 236, 239, 239),
+                        //       Color.fromARGB(255, 209, 226, 230),
+
+                        //       // Color.fromARGB(255, 255, 106, 134),
+                        //     ])),
+                        child: Card(
+                          color: Color.fromARGB(255, 218, 237, 242),
+                          // const Color.fromARGB(255, 169, 210, 239),
+                          child: ListTile(
+                            title: Text(
+                              data[index]['event_name'],
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 165, 112, 208)),
+                            ),
+                            subtitle: Text(
+                              data[index]['department'] +
+                                  "\n" +
                                   DateFormat('dd-mm-yyyy').format(
-                                      DateFormat('yyyy-mm-dd')
-                                          .parse(data[index]['event_date'])) ??
-                              " "),
-                          subtitle: Text(data[index]['department']),
-                          // trailing: Icon(Icons.more_vert),
-                          isThreeLine: true,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EventDetails(
-                                        id: data[index]['id'],
-                                        eventname: data[index]['event_name'],
-                                        eventdescription: data[index]
-                                            ['event_description'],
-                                        eventdate: DateFormat('dd-mm-yyyy')
-                                            .format(DateFormat('yyyy-mm-dd')
-                                                .parse(
-                                                    data[index]['event_date'])),
-                                        department: data[index]['department'],
-                                        ticket: data[index]['ticket'],
-                                        image: data[index]['image'],
-                                        maxticket: data[index]
-                                            ['max_no_of_tickets'],
-                                        remticket: data[index]
-                                            ['remaining_ticket'],
-                                        price: data[index]['price'],
-                                        ticketbookdate: data[index]
-                                            ['ticket_book_date'],
-                                        upi: data[index]['upi'],
-                                        reciever: data[index]['upi'],
-                                      )),
-                            );
-                          },
+                                    DateFormat('yyyy-mm-dd')
+                                        .parse(data[index]['event_date']),
+                                  ),
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 100, 95, 95)),
+                            ),
+                            // trailing: Icon(Icons.more_vert),
+                            isThreeLine: true,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EventDetails(
+                                          id: data[index]['id'],
+                                          eventname: data[index]['event_name'],
+                                          eventdescription: data[index]
+                                              ['event_description'],
+                                          eventdate: DateFormat('dd-mm-yyyy')
+                                              .format(DateFormat('yyyy-mm-dd')
+                                                  .parse(data[index]
+                                                      ['event_date'])),
+                                          department: data[index]['department'],
+                                          ticket: data[index]['ticket'],
+                                          image: data[index]['image'],
+                                          maxticket: data[index]
+                                              ['max_no_of_tickets'],
+                                          remticket: data[index]
+                                              ['remaining_ticket'],
+                                          price: data[index]['price'],
+                                          ticketbookdate: data[index]
+                                              ['ticket_book_date'],
+                                          upi: data[index]['upi'],
+                                          reciever: data[index]['upi'],
+                                        )),
+                              );
+                            },
+                          ),
                         ),
                       );
                     },

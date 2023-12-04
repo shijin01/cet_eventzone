@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.token),
-          label: 'Ticket',
+          label: 'Events & Ticket',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),

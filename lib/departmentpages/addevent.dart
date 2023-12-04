@@ -36,6 +36,7 @@ class _AddEventState extends State<AddEvent> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.all(10),
