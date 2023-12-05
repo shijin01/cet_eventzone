@@ -1,5 +1,6 @@
 import 'package:cet_eventzone/clientsupa.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -44,12 +45,15 @@ class _ParticipantListState extends State<ParticipantList> {
     getdata();
     return Scaffold(
         appBar: AppBar(
-          title: const Text("EventZone"),
+          title: const Text(""),
         ),
         body: SafeArea(
           child: Center(
             child: Column(children: [
-              Text(widget.eventname),
+              Text(
+                widget.eventname,
+                style: GoogleFonts.abel(fontSize: 40, color: Colors.blue),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -62,30 +66,32 @@ class _ParticipantListState extends State<ParticipantList> {
                         headingTextStyle:
                             const TextStyle(fontWeight: FontWeight.bold),
                         columnSpacing: 28,
-                        columns: const [
-                          DataColumn(label: Text('Sl No.')),
-                          DataColumn(label: Text('Name')),
-                          DataColumn(label: Text('Department')),
-                          DataColumn(label: Text('Year'))
+                        columns: [
+                          DataColumn(label: HeadingText(s: 'Sl No.')),
+                          DataColumn(label: HeadingText(s: 'Name')),
+                          DataColumn(label: HeadingText(s: 'Department')),
+                          DataColumn(label: HeadingText(s: 'Year'))
                         ],
                         rows: data.isNotEmpty
                             ? List.generate(data.length, (index) {
                                 {
                                   print('data length:${data.length}');
                                   return DataRow(cells: [
-                                    DataCell(Text((index + 1).toString())),
-                                    DataCell(Text(data[index]['name'])),
-                                    DataCell(Text(data[index]['department'])),
-                                    DataCell(Text(data[index]['year']))
+                                    DataCell(
+                                        CellText(s: (index + 1).toString())),
+                                    DataCell(CellText(s: data[index]['name'])),
+                                    DataCell(
+                                        CellText(s: data[index]['department'])),
+                                    DataCell(CellText(s: data[index]['year']))
                                   ]);
                                 }
                               })
-                            : const <DataRow>[
+                            : <DataRow>[
                                 DataRow(cells: [
-                                  DataCell(SizedBox.shrink()),
-                                  DataCell(Text("No     data")),
-                                  DataCell(Text("found")),
-                                  DataCell(SizedBox.shrink()),
+                                  const DataCell(SizedBox.shrink()),
+                                  DataCell(CellText(s: "No     data")),
+                                  DataCell(CellText(s: "found")),
+                                  const DataCell(SizedBox.shrink()),
                                 ])
                               ]),
                   ),
@@ -94,5 +100,35 @@ class _ParticipantListState extends State<ParticipantList> {
             ]),
           ),
         ));
+  }
+}
+
+// ignore: must_be_immutable
+class HeadingText extends StatelessWidget {
+  String s;
+  HeadingText({super.key, required this.s});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      s,
+      style: GoogleFonts.acme(
+        color: Colors.blueGrey,
+        // fontSize: 10
+      ),
+    );
+  }
+}
+
+class CellText extends StatelessWidget {
+  String s;
+  CellText({super.key, required this.s});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      s,
+      style: GoogleFonts.abhayaLibre(color: Colors.blueGrey, fontSize: 18),
+    );
   }
 }

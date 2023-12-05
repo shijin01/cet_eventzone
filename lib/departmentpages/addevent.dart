@@ -345,6 +345,17 @@ class _AddEventState extends State<AddEvent> {
                           ticketnumbercontroller.text,
                           upicontroller.text);
                       if (success) {
+                        setState(() {
+                          eventnamecontroller.text = "";
+                          eventdetailscontroller.text = "";
+                          eventdatecontroller.text = "";
+                          pickedFile = null;
+                          toggleval = 0;
+                          ticketdate.text = "";
+                          pricecontroller.text = "";
+                          ticketnumbercontroller.text = "";
+                          upicontroller.text = "";
+                        });
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Successfull"),
                           backgroundColor: Colors.green[200],
@@ -385,6 +396,17 @@ class _AddEventState extends State<AddEvent> {
                           ticketnumbercontroller.text,
                           upicontroller.text);
                       if (success) {
+                        setState(() {
+                          eventnamecontroller.text = "";
+                          eventdetailscontroller.text = "";
+                          eventdatecontroller.text = "";
+                          pickedFile = null;
+                          toggleval = 0;
+                          ticketdate.text = "";
+                          pricecontroller.text = "";
+                          ticketnumbercontroller.text = "";
+                          upicontroller.text = "";
+                        });
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Successfull"),
                           backgroundColor: Colors.green[200],

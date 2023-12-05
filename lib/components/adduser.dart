@@ -34,6 +34,7 @@ class _AddUserState extends State<AddUser> {
     }
 
     return Scaffold(
+      // backgroundColor:Colors.grey[350] ,
       appBar: AppBar(
         title: const Text("Add User"),
       ),
@@ -121,7 +122,8 @@ class _AddUserState extends State<AddUser> {
                 onPressed: () async {
                   final usercreated = await createuser(
                       context, emailcontroller.text, passwordcontroller.text);
-                  if (usercreated!=null && usercreated.email == emailcontroller.text) {
+                  if (usercreated != null &&
+                      usercreated.email == emailcontroller.text) {
                     final lid = await insertintologin(emailcontroller.text,
                         widget.typeofuser!, usercreated.id);
                     final success = await insertintouserdetails(
@@ -136,21 +138,21 @@ class _AddUserState extends State<AddUser> {
                       departmentcontroller.text = "";
                       namecontroller.text = "";
                       yearcontroller.text = "1";
-                      
-                      if(widget.typeofuser=="user"){
+
+                      if (widget.typeofuser == "user") {
                         // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             backgroundColor: Colors.green[200],
-                            content: const Text("Successfully Registered,Please login")));
+                            content: const Text(
+                                "Successfully Registered,Please login")));
                         // ignore: use_build_context_synchronously
                         Navigator.pop(context);
-                        }
-                        else{
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             backgroundColor: Colors.green[200],
                             content: const Text("Successfully added")));
-                        }
+                      }
                     } else {
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

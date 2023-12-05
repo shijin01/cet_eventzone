@@ -252,7 +252,7 @@ class _EventDetailsState extends State<EventDetails> {
                                         .parse(DateFormat('yyyy-mm-dd')
                                             .format(DateTime.now()))
                                         .compareTo(DateFormat('yyyy-mm-dd')
-                                            .parse(widget.ticketbookdate!)) <
+                                            .parse(widget.ticketbookdate!)) <=
                                     0)
                                 ? () async {
                                     SharedPreferences prefs =

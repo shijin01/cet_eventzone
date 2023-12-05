@@ -1,6 +1,7 @@
 import 'package:cet_eventzone/clientsupa.dart';
 import 'package:cet_eventzone/components/homescreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'adduser.dart';
 // import 'package:flutter/services.dart';
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.indigoAccent[200],
-        title: const Text("Welcome"),
+        // title: const Text("Welcome"),
       ),
       body: SafeArea(
         child: Column(
@@ -121,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(15),
               child: TextField(
                 obscureText: showpassword,
                 decoration: InputDecoration(
@@ -153,14 +154,14 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 padding: const EdgeInsets.all(25),
                 decoration: const BoxDecoration(),
-                child: const Center(
+                child: Center(
                   child: Text(
                     "Create user",
-                    style: TextStyle(
+                    style: GoogleFonts.adamina(
                       decoration: TextDecoration.underline,
                       color: Color.fromARGB(255, 44, 40, 161),
                       fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                      fontSize: 17,
                     ),
                   ),
                 ),
