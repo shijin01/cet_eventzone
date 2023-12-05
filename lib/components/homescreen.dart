@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black45,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('EventZone'),

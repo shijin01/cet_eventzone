@@ -18,6 +18,7 @@ class _EventWidgetState extends State<EventWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: Center(
           child: Column(children: <Widget>[
@@ -37,7 +38,7 @@ class _EventWidgetState extends State<EventWidget> {
                       borderRadius: BorderRadius.all(Radius.circular(40)),
                     ),
                     hintText: "Search",
-                    prefixIcon: Icon(Icons.search_rounded, color: Colors.blue),
+                    prefixIcon:const Icon(Icons.search_rounded, color: Colors.blue),
                     hintStyle:
                         const TextStyle(color: Color.fromARGB(255, 14, 58, 95)),
                     suffix: IconButton(
@@ -98,12 +99,12 @@ class _EventWidgetState extends State<EventWidget> {
                         //       // Color.fromARGB(255, 255, 106, 134),
                         //     ])),
                         child: Card(
-                          color: Color.fromARGB(255, 218, 237, 242),
+                          color:const Color.fromARGB(255, 218, 237, 242),
                           // const Color.fromARGB(255, 169, 210, 239),
                           child: ListTile(
                             title: Text(
                               data[index]['event_name'],
-                              style: TextStyle(
+                              style:const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(255, 165, 112, 208)),
@@ -115,7 +116,7 @@ class _EventWidgetState extends State<EventWidget> {
                                     DateFormat('yyyy-mm-dd')
                                         .parse(data[index]['event_date']),
                                   ),
-                              style: TextStyle(
+                              style:const TextStyle(
                                   color: Color.fromARGB(255, 100, 95, 95)),
                             ),
                             // trailing: Icon(Icons.more_vert),

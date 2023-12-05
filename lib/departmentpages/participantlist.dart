@@ -49,7 +49,7 @@ class _ParticipantListState extends State<ParticipantList> {
         body: SafeArea(
           child: Center(
             child: Column(children: [
-              const Text("Helo"),
+              Text(widget.eventname),
               const SizedBox(
                 height: 10,
               ),

@@ -2,6 +2,7 @@ import 'package:cet_eventzone/components/adduser.dart';
 import 'package:flutter/material.dart';
 // import 'package:cet_eventzone/main.dart';
 import 'package:cet_eventzone/dbconnect.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SuperuserView extends StatefulWidget {
@@ -19,7 +20,6 @@ class _SuperuserViewState extends State<SuperuserView> {
     setState(() {
       data = selectdepartmentusers();
     });
-    
   }
 
   @override
@@ -30,13 +30,12 @@ class _SuperuserViewState extends State<SuperuserView> {
             child: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>  AddUser(typeofuser: "department")));
+                  builder: (context) => AddUser(typeofuser: "department")));
             }),
         body: SafeArea(
             child: Center(
                 child: Column(
           children: [
-            const Text("Helo"),
             const SizedBox(
               height: 10,
             ),
@@ -55,9 +54,24 @@ class _SuperuserViewState extends State<SuperuserView> {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               return Card(
+                                color: const Color.fromARGB(255, 218, 237, 242),
                                 child: ListTile(
-                                  title: Text(data1[index]['username']),
-                                  subtitle: Text(data1[index]['typeofuser']),
+                                  title: Text(
+                                    data1[index]['login']['username'],
+                                    style: GoogleFonts.dhurjati(
+                                        // fontStyle: GoogleFonts.dhurjati,
+                                        fontSize: 20,
+                                        // fontWeight: FontWeight.bold,
+                                        color:
+                                            Color.fromARGB(255, 165, 112, 208)),
+                                  ),
+                                  subtitle: Text(
+                                    data1[index]['department'],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:
+                                            Color.fromARGB(255, 203, 112, 208)),
+                                  ),
                                   trailing: IconButton(
                                     icon: Icon(Icons.delete_rounded,
                                         color: Colors.red[500]),

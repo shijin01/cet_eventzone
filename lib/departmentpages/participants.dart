@@ -1,6 +1,7 @@
 import 'package:cet_eventzone/clientsupa.dart';
 import 'package:cet_eventzone/departmentpages/participantlist.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -40,9 +41,8 @@ class _ParticipantsViewState extends State<ParticipantsView> {
       body: SafeArea(
         child: Center(
           child: Column(children: [
-            const Text("Helo"),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             if (data.isNotEmpty)
               Expanded(
@@ -52,8 +52,15 @@ class _ParticipantsViewState extends State<ParticipantsView> {
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       return Card(
+                        color: const Color.fromARGB(255, 218, 237, 242),
                         child: ListTile(
-                          title: Text(data[index]['event_name']),
+                          title: Text(
+                            data[index]['event_name'],
+                            style: GoogleFonts.aBeeZee(
+                                fontSize: 20,
+                                // fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 165, 112, 208)),
+                          ),
                           subtitle: Text(DateFormat('dd-mm-yyyy').format(
                               DateFormat('yyyy-mm-dd')
                                   .parse(data[index]['event_date']))),

@@ -58,11 +58,11 @@ Future<List<Map<String, dynamic>>> selectdepartmentusers() async {
   // print("inside fun");
   // const typeofuser = "department";
   final List<Map<String, dynamic>> data =
-      await supabase.from('login').select('id,username,typeofuser');
+      await supabase.from('userdetails').select('*,login(*)');
   List<Map<String, dynamic>> d = [];
   for (var i in data) {
     // print(i);
-    if (i['typeofuser'] == 'department') {
+    if (i['login']['typeofuser'] == 'department') {
       d.add(i);
     }
   }
